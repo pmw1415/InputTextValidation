@@ -5,7 +5,7 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     -->
     <h1>input-text-validation</h1>
-    <InputTextValidation />
+    <InputTextValidation class="input-text-validation" />
   </div>
 </template>
 
@@ -30,5 +30,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+</style>
+
+<style scoped>
+.input-text-validation {
+  padding: 0 40px;
 }
 </style>

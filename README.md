@@ -1,5 +1,11 @@
 # input-text-validation
 
+## Overview
+
+input要素の入力内容をチェックして、エラー時にエラーメッセージを表示するVueコンポーネント
+
+プロジェクトはvue-cliを使って構築
+
 ## Project setup
 ```
 npm install

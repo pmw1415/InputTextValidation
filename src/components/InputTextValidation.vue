@@ -46,7 +46,7 @@ export default {
   computed: {
     /**
      * 入力エラー発生フラグ
-     * 
+     *
      * @return {Boolean} 入力エラーありの場合true
      */
     hasInputError() {
@@ -55,10 +55,10 @@ export default {
 
     /**
      * エラーメッセージリスト
-     * 
+     *
      * 各入力チェックをして、検知したチェックパターンのエラーメッセージをarrayでセットする。
      * 未指定のチェックパターンはチェックしない。
-     * 
+     *
      * @return {Array} エラーメッセージリスト。エラーなしの場合は空配列
      */
     errMsgList() {
@@ -86,11 +86,11 @@ export default {
 
     /**
      * 必須チェック
-     * 
+     *
      * required===trueの場合にチェック実施。
-     * 
+     *
      * valueが空の場合に入力エラー
-     * 
+     *
      * @param {String} value
      * @param {Boolean} required
      * @return {Boolean}
@@ -105,11 +105,11 @@ export default {
 
     /**
      * 文字数チェック: 最小、最大
-     * 
+     *
      * min, max両方とも指定された場合にチェック実施。
-     * 
+     *
      * value文字数がmin〜max範囲外の場合に入力エラー
-     * 
+     *
      * @param {String} value
      * @param {Number} min
      * @param {Number} max
@@ -125,11 +125,11 @@ export default {
 
     /**
      * 文字数チェック: 最小
-     * 
+     *
      * minが指定された場合にチェック実施。
-     * 
+     *
      * value文字数がmin未満の場合に入力エラー
-     * 
+     *
      * @param {String} value
      * @param {Number} min
      * @return {Boolean}
@@ -144,11 +144,11 @@ export default {
 
     /**
      * 文字数チェック: 最大
-     * 
+     *
      * maxが指定された場合にチェック実施。
-     * 
+     *
      * value文字数がmaxを超えた場合に入力エラー
-     * 
+     *
      * @param {String} value
      * @param {Number} max
      * @return {Boolean}

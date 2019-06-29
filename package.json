@@ -30,6 +30,7 @@
       "eslint:recommended"
     ],
     "rules": {
+      "no-trailing-spaces": "error",
       "semi": "error"
     },
     "parserOptions": {

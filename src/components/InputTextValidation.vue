@@ -5,7 +5,13 @@
       v-model="value"
       class="input"
     />
-    <div class="error-message">{{ errMsg }}</div>
+    <div
+      v-for="(errMsg, index) in errMsgList"
+      :key="index"
+      class="error-message"
+    >
+      {{ errMsg }}
+    </div>
   </div>
 </template>
 
@@ -17,6 +23,10 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    min: {
+      type: Number,
+      default: 0
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -30,21 +40,30 @@ export default {
   computed: {
     // エラー有無フラグ
     hasInputError() {
-      return this.errMsg.length > 0;
+      return this.errMsgList.length > 0;
     },
-    // エラーメッセージ
-    errMsg() {
-      // TODO 複数パターンをチェック、エラー通知できるようにする
+
+    // エラーメッセージリスト
+    // 入力チェックして、エラーパターンのメッセージをセットする
+    errMsgList() {
+      const msgList = [];
 
       if (this.required) {
         // 必須チェック
         if (!this.value.length) {
-          return '入力してください。';
+          msgList.push('入力してください。');
         }
       }
 
-      // OK
-      return '';
+      // TODO デバッグ用に暫定で追加。要整理!
+      if (this.min) {
+        // 文字数チェック:最小
+        if (this.value.length < this.min) {
+          msgList.push(`${this.min}文字以上で指定してください。`);
+        }
+      }
+
+      return msgList;
     }
   },
   method: {

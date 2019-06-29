@@ -8,6 +8,7 @@
     <InputTextValidation
       class="input-text-validation"
       :required="true"
+      :min="10"
     />
   </div>
 </template>

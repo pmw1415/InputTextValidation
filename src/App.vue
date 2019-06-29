@@ -5,7 +5,10 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     -->
     <h1>input-text-validation</h1>
-    <InputTextValidation class="input-text-validation" />
+    <InputTextValidation
+      class="input-text-validation"
+      :required="true"
+    />
   </div>
 </template>
 

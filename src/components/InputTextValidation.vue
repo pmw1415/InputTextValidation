@@ -1,6 +1,9 @@
 <template>
   <div class="input-text-validation">
-    <input class="input" />
+    <input
+      v-model="value"
+      class="input"
+    />
     <div class="error-message">{{ errMsg }}</div>
   </div>
 </template>
@@ -9,16 +12,38 @@
 export default {
   name: 'InputTextValidation',
   props: {
+    // 必須チェック
+    required: {
+      type: Boolean,
+      default: false
+    }
+
     // TODO チェックパターンとチェックに必要なパラメータを追加
+
   },
   data: () => {
     return {
-      errMsg: 'TODO 入力エラー時にエラーメッセージをセット'
+      value: ''
     };
+  },
+  computed: {
+    errMsg() {
+      // TODO 複数パターンをチェック、エラー通知できるようにする
+      // TODO input要素の枠を変える
+      
+      if (this.required) {
+        // 必須チェック
+        if (!this.value.length) {
+          return '入力してください。';
+        }
+      }
+
+      // OK
+      return '';
+    }
   },
   method: {
     // TODO チェックパターンごとにメソッドを追加
-    // TODO input入力を検知してチェック処理を実施
   }
 };
 </script>

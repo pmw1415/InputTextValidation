@@ -44,13 +44,23 @@ export default {
     };
   },
   computed: {
-    // エラー有無フラグ
+    /**
+     * 入力エラー発生フラグ
+     * 
+     * @return {Boolean} 入力エラーありの場合true
+     */
     hasInputError() {
       return this.errMsgList.length > 0;
     },
 
-    // エラーメッセージリスト
-    // 入力チェックして、エラーパターンのメッセージをセットする
+    /**
+     * エラーメッセージリスト
+     * 
+     * 各入力チェックをして、検知したチェックパターンのエラーメッセージをarrayでセットする。
+     * 未指定のチェックパターンはチェックしない。
+     * 
+     * @return {Array} エラーメッセージリスト。エラーなしの場合は空配列
+     */
     errMsgList() {
       const msgList = [];
 
@@ -74,7 +84,17 @@ export default {
   methods: {
     // TODO チェックパターンごとにメソッドを追加
 
-    // 必須チェック
+    /**
+     * 必須チェック
+     * 
+     * required===trueの場合にチェック実施。
+     * 
+     * valueが空の場合に入力エラー
+     * 
+     * @param {String} value
+     * @param {Boolean} required
+     * @return {Boolean}
+     */
     isErrorRequired(value, required) {
       if (!required) {
         return false;
@@ -83,7 +103,18 @@ export default {
       return !value.length;
     },
 
-    // 文字数チェック: 最小、最大
+    /**
+     * 文字数チェック: 最小、最大
+     * 
+     * min, max両方とも指定された場合にチェック実施。
+     * 
+     * value文字数がmin〜max範囲外の場合に入力エラー
+     * 
+     * @param {String} value
+     * @param {Number} min
+     * @param {Number} max
+     * @return {Boolean}
+     */
     isErrorLengthMinMax(value, min, max) {
       if (!min || !max) {
         return false;
@@ -92,7 +123,17 @@ export default {
       return this.isErrorLengthMin(value, min) || this.isErrorLengthMax(value, max);
     },
 
-    // 文字数チェック: 最小
+    /**
+     * 文字数チェック: 最小
+     * 
+     * minが指定された場合にチェック実施。
+     * 
+     * value文字数がmin未満の場合に入力エラー
+     * 
+     * @param {String} value
+     * @param {Number} min
+     * @return {Boolean}
+     */
     isErrorLengthMin(value, min) {
       if (!min) {
         return false;
@@ -101,6 +142,17 @@ export default {
       return value.length < min;
     },
 
+    /**
+     * 文字数チェック: 最大
+     * 
+     * maxが指定された場合にチェック実施。
+     * 
+     * value文字数がmaxを超えた場合に入力エラー
+     * 
+     * @param {String} value
+     * @param {Number} max
+     * @return {Boolean}
+     */
     // 文字数チェック: 最大
     isErrorLengthMax(value, max) {
       if (!max) {

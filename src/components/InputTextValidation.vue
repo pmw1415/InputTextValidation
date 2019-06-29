@@ -24,7 +24,13 @@ export default {
       type: Boolean,
       default: false
     },
+    // 最小文字数
     min: {
+      type: Number,
+      default: 0
+    },
+    // 最大文字数
+    max: {
       type: Number,
       default: 0
     }
@@ -55,11 +61,20 @@ export default {
         }
       }
 
-      // TODO デバッグ用に暫定で追加。要整理!
-      if (this.min) {
-        // 文字数チェック:最小
+      if (this.min && this.max) {
+        // 文字数チェック: 最小、最大
+        if (this.value.length < this.min || this.value.length > this.max) {
+          msgList.push(`${this.min}〜${this.max}文字で指定してください。`);
+        }
+      } else if (this.min) {
+        // 文字数チェック: 最小
         if (this.value.length < this.min) {
           msgList.push(`${this.min}文字以上で指定してください。`);
+        }
+      } else if (this.max) {
+        // 文字数チェック: 最大
+        if (this.value.length > this.max) {
+          msgList.push(`${this.max}文字以下で指定してください。`);
         }
       }
 

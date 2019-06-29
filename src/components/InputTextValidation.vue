@@ -54,35 +54,61 @@ export default {
     errMsgList() {
       const msgList = [];
 
-      if (this.required) {
-        // 必須チェック
-        if (!this.value.length) {
-          msgList.push('入力してください。');
-        }
+      // 必須チェック
+      if (this.isErrorRequired(this.value, this.required)) {
+        msgList.push('入力してください。');
       }
 
-      if (this.min && this.max) {
-        // 文字数チェック: 最小、最大
-        if (this.value.length < this.min || this.value.length > this.max) {
-          msgList.push(`${this.min}〜${this.max}文字で指定してください。`);
-        }
-      } else if (this.min) {
-        // 文字数チェック: 最小
-        if (this.value.length < this.min) {
-          msgList.push(`${this.min}文字以上で指定してください。`);
-        }
-      } else if (this.max) {
-        // 文字数チェック: 最大
-        if (this.value.length > this.max) {
-          msgList.push(`${this.max}文字以下で指定してください。`);
-        }
+      // 文字数チェック
+      if (this.isErrorLengthMinMax(this.value, this.min, this.max)) {
+        msgList.push(`${this.min}〜${this.max}文字で指定してください。`);
+      } else if (this.isErrorLengthMin(this.value, this.min)) {
+        msgList.push(`${this.min}文字以上で指定してください。`);
+      } else if (this.isErrorLengthMax(this.value, this.max)) {
+        msgList.push(`${this.max}文字以下で指定してください。`);
       }
 
       return msgList;
     }
   },
-  method: {
+  methods: {
     // TODO チェックパターンごとにメソッドを追加
+
+    // 必須チェック
+    isErrorRequired(value, required) {
+      if (!required) {
+        return false;
+      }
+
+      return !value.length;
+    },
+
+    // 文字数チェック: 最小、最大
+    isErrorLengthMinMax(value, min, max) {
+      if (!min || !max) {
+        return false;
+      }
+
+      return this.isErrorLengthMin(value, min) || this.isErrorLengthMax(value, max);
+    },
+
+    // 文字数チェック: 最小
+    isErrorLengthMin(value, min) {
+      if (!min) {
+        return false;
+      }
+
+      return value.length < min;
+    },
+
+    // 文字数チェック: 最大
+    isErrorLengthMax(value, max) {
+      if (!max) {
+        return false;
+      }
+
+      return value.length > max;
+    }
   }
 };
 </script>

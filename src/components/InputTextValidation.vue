@@ -1,6 +1,7 @@
 <template>
   <div class="input-text-validation">
     <input
+      :class="{ error: hasInputError }"
       v-model="value"
       class="input"
     />
@@ -27,10 +28,14 @@ export default {
     };
   },
   computed: {
+    // エラー有無フラグ
+    hasInputError() {
+      return this.errMsg.length > 0;
+    },
+    // エラーメッセージ
     errMsg() {
       // TODO 複数パターンをチェック、エラー通知できるようにする
-      // TODO input要素の枠を変える
-      
+
       if (this.required) {
         // 必須チェック
         if (!this.value.length) {
@@ -51,6 +56,10 @@ export default {
 <style scoped>
 .input-text-validation {
   text-align: left;
+}
+
+.input.error {
+  border: 1px solid red;
 }
 
 .error-message {

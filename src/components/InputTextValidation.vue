@@ -78,6 +78,27 @@ export default {
         msgList.push(`${this.max}文字以下で指定してください。`);
       }
 
+      // 数字チェック
+      // TODO
+
+      // 半角英数チェック
+      // TODO
+
+      // 全角チェック
+      // TODO
+
+      // 電話番号チェック
+      // TODO
+
+      // メールアドレスチェック
+      // TODO
+
+      // URLチェック
+      // TODO
+
+      // 年月日チェック
+      // TODO
+
       return msgList;
     }
   },

@@ -33,6 +33,11 @@ export default {
     max: {
       type: Number,
       default: 0
+    },
+    // 数値チェック
+    numeric: {
+      type: Boolean,
+      default: false
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -78,8 +83,10 @@ export default {
         msgList.push(`${this.max}文字以下で指定してください。`);
       }
 
-      // 数字チェック
-      // TODO
+      // 数値チェック
+      if (this.isErrorNumeric(this.value, this.numeric)) {
+        msgList.push(`半角数値で指定してください。`);
+      }
 
       // 半角英数チェック
       // TODO
@@ -180,6 +187,25 @@ export default {
       }
 
       return value.length > max;
+    },
+
+    /**
+     * 数値チェック
+     *
+     * numericが指定された場合にチェック実施。
+     *
+     * value文字数がmaxを超えた場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} numeric
+     * @return {Boolean}
+     */
+    isErrorNumeric(value, numeric) {
+      if (!numeric) {
+        return false;
+      }
+
+      return !value.match(/^[0-9]+$/);
     }
   }
 };

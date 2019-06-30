@@ -48,6 +48,11 @@ export default {
     zen: {
       type: Boolean,
       default: false
+    },
+    // 電話番号チェック
+    tel: {
+      type: Boolean,
+      default: false
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -109,7 +114,9 @@ export default {
       }
 
       // 電話番号チェック
-      // TODO
+      if (this.isErrorTel(this.value, this.tel)) {
+        msgList.push(`電話番号を入力してください。`);
+      }
 
       // メールアドレスチェック
       // TODO
@@ -259,6 +266,51 @@ export default {
 
       // 1バイト文字(¥x01-¥x7E)、半角カナ(¥xA1-¥xDF)が含まれないかチェック
       return !value.match(/^[^¥x01-¥x7E¥xA1-¥xDF]+$/);
+    },
+
+    /**
+     * 電話番号チェック
+     *
+     * telが指定された場合にチェック実施。
+     *
+     * valueが以下パターン以外の場合に入力エラー
+     * (1)1文字目がゼロ、2文字目がゼロ以外の数字
+     * (2)数字が10〜11文字で、数字のみか電話番号の書式でハイフン区切りの数字
+     *
+     * @param {String} value
+     * @param {Boolean} tel
+     * @return {Boolean}
+     */
+    isErrorTel(value, tel) {
+      if (!tel) {
+        return false;
+      }
+
+      // 固定電話: XX-XXXX-XXXX, XXX-XXX-XXXX, XXXX-XX-XXXX, XXXXX-X-XXXX (10桁)
+      // 携帯電話: 070-XXXX-XXXX, 080-XXXX-XXXX, 090-XXXX-XXXX (11桁)
+      // IP電話: 050-XXXX-XXXX (11桁)
+      // フリーダイヤル: 0120-XXX-XXX (10桁)
+
+      if (!value.match(/^0[1-9]/)) {
+        // 1文字目ゼロ、かつ2文字目ゼロ以外に該当しないためエラー
+        return true;
+      }
+
+      if (value.match(/^\d{10}$|^\d{11}$/)) {
+        // 数字のみ電話番号
+        return false;
+      }
+
+      const regTel1 = /^\d{2}-\d{4}-\d{4}$|^\d{3}-\d{3}-\d{4}$|^\d{4}-\d{2}-\d{4}$|^\d{5}-\d-\d{4}$/;
+      const regTel2 = /^\d{3}-\d{4}-\d{4}$/;
+      const regTel3 = /^\d{4}-\d{3}-\d{3}$/;
+      if (value.match(regTel1) || value.match(regTel2) || value.match(regTel3)) {
+        // ハイフン付きの電話番号
+        return false;
+      }
+
+      // 電話番号の書式じゃない
+      return true;
     }
   }
 };

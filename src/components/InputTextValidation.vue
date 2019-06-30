@@ -38,6 +38,11 @@ export default {
     numeric: {
       type: Boolean,
       default: false
+    },
+    // 半角英数チェック
+    alphaNum: {
+      type: Boolean,
+      default: false
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -89,7 +94,9 @@ export default {
       }
 
       // 半角英数チェック
-      // TODO
+      if (this.isErrorAlphaNum(this.value, this.alphaNum)) {
+        msgList.push(`半角英数で入力してください。`);
+      }
 
       // 全角チェック
       // TODO
@@ -206,6 +213,25 @@ export default {
       }
 
       return !value.match(/^[0-9]+$/);
+    },
+
+    /**
+     * 半角英数チェック
+     *
+     * alphaNumが指定された場合にチェック実施。
+     *
+     * valueに半角英数以外が含まれる場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} alphaNum
+     * @return {Boolean}
+     */
+    isErrorAlphaNum(value, alphaNum) {
+      if (!alphaNum) {
+        return false;
+      }
+
+      return !value.match(/^[0-9A-Za-z]+$/);
     }
   }
 };

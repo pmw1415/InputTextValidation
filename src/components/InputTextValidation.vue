@@ -53,6 +53,11 @@ export default {
     tel: {
       type: Boolean,
       default: false
+    },
+    // 日付チェック
+    date: {
+      type: Boolean,
+      default: false
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -125,7 +130,9 @@ export default {
       // TODO
 
       // 年月日チェック
-      // TODO
+      if (this.isErrorDate(this.value, this.date)) {
+        msgList.push(`日付(YYYY/MM/DD, YYYY-MM-DD)を入力してください。`);
+      }
 
       return msgList;
     }
@@ -311,6 +318,25 @@ export default {
 
       // 電話番号の書式じゃない
       return true;
+    },
+
+    /**
+     * 日付チェック
+     *
+     * dateが指定された場合にチェック実施。
+     *
+     * valueが日付書式(YYYY/MM/DD, YYYY-MM-DD)でない場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} date
+     * @return {Boolean}
+     */
+    isErrorDate(value, date) {
+      if (!date) {
+        return false;
+      }
+
+      return !value.match(/^\d{4}\/\d{2}\/\d{2}$|^\d{4}-\d{2}-\d{2}$/);
     }
   }
 };

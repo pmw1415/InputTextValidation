@@ -81,11 +81,11 @@ export default {
 
       // 文字数チェック
       if (this.isErrorLengthMinMax(this.value, this.min, this.max)) {
-        msgList.push(`${this.min}〜${this.max}文字で指定してください。`);
+        msgList.push(`${this.min}〜${this.max}文字を入力してください。`);
       } else if (this.isErrorLengthMin(this.value, this.min)) {
-        msgList.push(`${this.min}文字以上で指定してください。`);
+        msgList.push(`${this.min}文字以上を入力してください。`);
       } else if (this.isErrorLengthMax(this.value, this.max)) {
-        msgList.push(`${this.max}文字以下で指定してください。`);
+        msgList.push(`${this.max}文字以下を入力してください。`);
       }
 
       // 数値チェック

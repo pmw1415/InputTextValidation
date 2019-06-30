@@ -85,7 +85,7 @@ export default {
 
       // 数値チェック
       if (this.isErrorNumeric(this.value, this.numeric)) {
-        msgList.push(`半角数値で指定してください。`);
+        msgList.push(`半角数値で入力してください。`);
       }
 
       // 半角英数チェック
@@ -194,7 +194,7 @@ export default {
      *
      * numericが指定された場合にチェック実施。
      *
-     * value文字数がmaxを超えた場合に入力エラー
+     * valueに半角数値以外が含まれる場合に入力エラー
      *
      * @param {String} value
      * @param {Boolean} numeric

@@ -43,6 +43,11 @@ export default {
     alphaNum: {
       type: Boolean,
       default: false
+    },
+    // 全角チェック
+    zen: {
+      type: Boolean,
+      default: false
     }
 
     // TODO チェックパターンとチェックに必要なパラメータを追加
@@ -99,7 +104,9 @@ export default {
       }
 
       // 全角チェック
-      // TODO
+      if (this.isErrorZen(this.value, this.zen)) {
+        msgList.push(`全角で入力してください。`);
+      }
 
       // 電話番号チェック
       // TODO
@@ -232,6 +239,26 @@ export default {
       }
 
       return !value.match(/^[0-9A-Za-z]+$/);
+    },
+
+    /**
+     * 全角チェック
+     *
+     * zenが指定された場合にチェック実施。
+     *
+     * valueに全角以外が含まれる場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} zen
+     * @return {Boolean}
+     */
+    isErrorZen(value, zen) {
+      if (!zen) {
+        return false;
+      }
+
+      // 1バイト文字(¥x01-¥x7E)、半角カナ(¥xA1-¥xDF)が含まれないかチェック
+      return !value.match(/^[^¥x01-¥x7E¥xA1-¥xDF]+$/);
     }
   }
 };

@@ -153,7 +153,6 @@ export default {
      * @param {Number} max
      * @return {Boolean}
      */
-    // 文字数チェック: 最大
     isErrorLengthMax(value, max) {
       if (!max) {
         return false;

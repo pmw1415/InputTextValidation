@@ -5,12 +5,96 @@
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     -->
     <h1>input-text-validation</h1>
-    <InputTextValidation
-      class="input-text-validation"
-      :required="true"
-      :min="5"
-      :max="10"
-    />
+    <div class="validation">
+      <div class="label">
+        必須チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :required="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        文字数チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :min="5"
+        :max="10"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        数値チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :numeric="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        半角英数チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :alphaNum="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        全角チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :zen="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        電話番号チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :tel="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        メールアドレスチェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :mail="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        URLチェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :url="true"
+      />
+    </div>
+
+    <div class="validation">
+      <div class="label">
+        日付チェック
+      </div>
+      <InputTextValidation
+        class="input-text-validation"
+        :date="true"
+      />
+    </div>
   </div>
 </template>
 
@@ -39,7 +123,8 @@ export default {
 </style>
 
 <style scoped>
-.input-text-validation {
-  padding: 0 40px;
+.validation {
+  padding: 20px 40px;
+  text-align: left;
 }
 </style>

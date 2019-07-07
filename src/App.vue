@@ -17,12 +17,34 @@
 
     <div class="validation">
       <div class="label">
-        文字数チェック
+        文字数チェック(min/max未入力で指定なし)
+      </div>
+      <div class="param">
+        <div class="param-min">
+          <span class="label">min:</span>
+          <input
+            v-model="min"
+            class="value"
+            type="number"
+            step="1"
+            min="0"
+          />
+        </div>
+        <div class="param-max">
+          <span class="label">max:</span>
+          <input
+            v-model="max"
+            class="value"
+            type="number"
+            step="1"
+            min="0"
+          />
+        </div>
       </div>
       <InputTextValidation
         class="input-text-validation"
-        :min="5"
-        :max="10"
+        :min="min"
+        :max="max"
       />
     </div>
 
@@ -107,6 +129,12 @@ export default {
   components: {
     // HelloWorld
     InputTextValidation
+  },
+  data() {
+    return {
+      min: 5,
+      max: 10
+    };
   }
 };
 </script>
@@ -126,5 +154,24 @@ export default {
 .validation {
   padding: 20px 40px;
   text-align: left;
+}
+
+.param {
+  display: flex;
+}
+
+.param-min,
+.param-max {
+  display: flex;
+  width: 100px;
+}
+.param
+.param-min .label,
+.param-max .label {
+  width: 40px;
+}
+.param-min .value,
+.param-max .value {
+  width: 40px;
 }
 </style>

@@ -59,14 +59,15 @@ export default {
       type: Boolean,
       default: false
     },
+    url: {
+      type: Boolean,
+      default: false
+    },
     // 日付チェック
     date: {
       type: Boolean,
       default: false
     }
-
-    // TODO チェックパターンとチェックに必要なパラメータを追加
-
   },
   data: () => {
     return {
@@ -134,7 +135,9 @@ export default {
       }
 
       // URLチェック
-      // TODO
+      if (this.isErrorUrl(this.value, this.url)) {
+        msgList.push(`URLを入力してください。`);
+      }
 
       // 年月日チェック
       if (this.isErrorDate(this.value, this.date)) {
@@ -145,8 +148,6 @@ export default {
     }
   },
   methods: {
-    // TODO チェックパターンごとにメソッドを追加
-
     /**
      * 必須チェック
      *
@@ -344,6 +345,25 @@ export default {
       }
 
       return !value.match(/\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/);
+    },
+
+    /**
+     * URLチェック
+     *
+     * urlが指定された場合にチェック実施。
+     *
+     * valueがhttp://～(https, ftp)の書式でない場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} url
+     * @return {Boolean}
+     */
+    isErrorUrl(value, url) {
+      if (!url) {
+        return false;
+      }
+
+      return !value.match(/^(http|https|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)$/);
     },
 
     /**

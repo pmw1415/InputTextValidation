@@ -59,6 +59,7 @@ export default {
       type: Boolean,
       default: false
     },
+    // URLチェック
     url: {
       type: Boolean,
       default: false

@@ -54,6 +54,11 @@ export default {
       type: Boolean,
       default: false
     },
+    // メールアドレスチェック
+    mail: {
+      type: Boolean,
+      default: false
+    },
     // 日付チェック
     date: {
       type: Boolean,
@@ -124,7 +129,9 @@ export default {
       }
 
       // メールアドレスチェック
-      // TODO
+      if (this.isErrorMailAddress(this.value, this.mail)) {
+        msgList.push(`メールアドレスを入力してください。`);
+      }
 
       // URLチェック
       // TODO
@@ -318,6 +325,25 @@ export default {
 
       // 電話番号の書式じゃない
       return true;
+    },
+
+    /**
+     * メールアドレスチェック
+     *
+     * mailが指定された場合にチェック実施。
+     *
+     * valueがx@x.xxの書式でない場合に入力エラー
+     *
+     * @param {String} value
+     * @param {Boolean} mail
+     * @return {Boolean}
+     */
+    isErrorMailAddress(value, mail) {
+      if (!mail) {
+        return false;
+      }
+
+      return !value.match(/\w{1,}[@][\w\-]{1,}([.]([\w\-]{1,})){1,3}$/);
     },
 
     /**

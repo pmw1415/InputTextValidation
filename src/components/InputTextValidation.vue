@@ -11,12 +11,14 @@ TODO
   <div class="input-text-validation">
     <input
       :class="{ error: hasInputError }"
+      :style="{ 'font-size': fontSize }"
       v-model="value"
       class="input"
     />
     <div
       v-for="(errMsg, index) in errMsgList"
       :key="index"
+      :style="{ 'font-size': fontSize }"
       class="error-message"
     >
       {{ errMsg }}
@@ -28,6 +30,11 @@ TODO
 export default {
   name: 'InputTextValidation',
   props: {
+    // フォントサイズ
+    fontSize: {
+      type: String,
+      default: '14px'
+    },
     // 必須チェック
     required: {
       type: Boolean,
@@ -409,8 +416,7 @@ export default {
   -moz-border-radius: 4px;
   border-radius: 4px;
   font-family: Arial, sans-serif;
-  font-size: 14px;
-  height: 24px;
+  height: 1.6em;
   padding: 0 4px;
 }
 
@@ -425,7 +431,6 @@ export default {
 
 .error-message {
   color: #c60019;
-  font-size: 14px;
   margin-top: 4px;
 }
 </style>

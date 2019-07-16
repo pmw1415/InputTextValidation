@@ -407,6 +407,8 @@ export default {
 
 <style scoped>
 .input-text-validation {
+  display: flex;
+  flex-direction: column;
   text-align: left;
 }
 

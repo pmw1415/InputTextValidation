@@ -406,15 +406,15 @@ export default {
 }
 
 .input.error {
-  border: 1px solid red;
+  border: 1px solid #c60019;
 }
 
 .input:focus {
-  border: 1px solid #EEA34A;
+  border: 1px solid #0074bf;
   outline: none;
 }
 
 .error-message {
-  color: red;
+  color: #c60019;
 }
 </style>

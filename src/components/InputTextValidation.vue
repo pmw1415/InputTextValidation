@@ -4,8 +4,6 @@ TODO
 ・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
 ・tel, mail等のパターンが決まってるやつはプレースホルダーを指定する
 　　チェックパターン毎に固定で良い
-・エラーメッセージの背景を黄色っぽく
-　テキスト部分をspanで囲って黄色っぽい背景色を付ける
 -->
 <template>
   <div class="input-text-validation">
@@ -18,10 +16,14 @@ TODO
     <div
       v-for="(errMsg, index) in errMsgList"
       :key="index"
-      :style="{ 'font-size': fontSize }"
-      class="error-message"
+      class="validation-error"
     >
-      {{ errMsg }}
+      <span
+        :style="{ 'font-size': fontSize }"
+        class="message"
+      >
+        {{ errMsg }}
+      </span>
     </div>
   </div>
 </template>
@@ -431,8 +433,11 @@ export default {
   outline: none;
 }
 
-.error-message {
-  color: #c60019;
+.validation-error {
   margin-top: 4px;
+}
+.validation-error .message {
+  background: #fff353;
+  padding: 0 8px;
 }
 </style>

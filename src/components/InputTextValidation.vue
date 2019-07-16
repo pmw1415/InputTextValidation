@@ -4,10 +4,8 @@ TODO
 ・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
 ・tel, mail等のパターンが決まってるやつはプレースホルダーを指定する
 　　チェックパターン毎に固定で良い
-・エラーメッセージの文字サイズをinputに合わせる
 ・エラーメッセージの背景を黄色っぽく
 　テキスト部分をspanで囲って黄色っぽい背景色を付ける
-・inputの高さ増やして四隅を丸っぽく。フォーカス時も枠色変える程度でよさげ
 -->
 <template>
   <div class="input-text-validation">
@@ -405,6 +403,17 @@ export default {
   text-align: left;
 }
 
+.input {
+  border: solid 1px #b7b7b7;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  height: 24px;
+  padding: 0 4px;
+}
+
 .input.error {
   border: 1px solid #c60019;
 }
@@ -416,5 +425,7 @@ export default {
 
 .error-message {
   color: #c60019;
+  font-size: 14px;
+  margin-top: 4px;
 }
 </style>

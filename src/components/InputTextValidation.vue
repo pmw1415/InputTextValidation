@@ -409,6 +409,11 @@ export default {
   border: 1px solid red;
 }
 
+.input:focus {
+  border: 1px solid #EEA34A;
+  outline: none;
+}
+
 .error-message {
   color: red;
 }

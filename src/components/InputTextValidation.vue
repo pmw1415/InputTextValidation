@@ -1,16 +1,30 @@
+<--
+TODO
+・input typeをプロパティで指定できるようにする
+・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
+・tel, mail等のパターンが決まってるやつはプレースホルダーを指定する
+　　チェックパターン毎に固定で良い
+・初期表示時はバリデーションエラーが表示されないようにする
+-->
 <template>
   <div class="input-text-validation">
     <input
       :class="{ error: hasInputError }"
+      :style="{ 'font-size': fontSize }"
       v-model="value"
       class="input"
     />
     <div
       v-for="(errMsg, index) in errMsgList"
       :key="index"
-      class="error-message"
+      class="validation-error"
     >
-      {{ errMsg }}
+      <span
+        :style="{ 'font-size': fontSize }"
+        class="message"
+      >
+        {{ errMsg }}
+      </span>
     </div>
   </div>
 </template>
@@ -19,6 +33,11 @@
 export default {
   name: 'InputTextValidation',
   props: {
+    // フォントサイズ
+    fontSize: {
+      type: String,
+      default: '14px'
+    },
     // 必須チェック
     required: {
       type: Boolean,
@@ -391,14 +410,35 @@ export default {
 
 <style scoped>
 .input-text-validation {
+  display: flex;
+  flex-direction: column;
   text-align: left;
 }
 
-.input.error {
-  border: 1px solid red;
+.input {
+  border: solid 1px #b7b7b7;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  height: 1.6em;
+  padding: 0 4px;
 }
 
-.error-message {
-  color: red;
+.input.error {
+  border: 1px solid #c60019;
+}
+
+.input:focus {
+  border: 1px solid #0074bf;
+  outline: none;
+}
+
+.validation-error {
+  margin-top: 4px;
+}
+.validation-error .message {
+  background: #fff353;
+  padding: 0 8px;
 }
 </style>

@@ -2,8 +2,6 @@
 TODO
 ・input typeをプロパティで指定できるようにする
 ・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
-・tel, mail等のパターンが決まってるやつはプレースホルダーを指定する
-　　チェックパターン毎に固定で良い
 ・初期表示時はバリデーションエラーが表示されないようにする
 -->
 <template>
@@ -11,6 +9,7 @@ TODO
     <input
       :class="{ error: hasInputError }"
       :style="{ 'font-size': fontSize }"
+      :placeholder="placeholder"
       v-model="value"
       class="input"
     />
@@ -95,6 +94,26 @@ export default {
     };
   },
   computed: {
+    /**
+     * プレースホルダー
+     */
+    placeholder() {
+      let placeholder = '';
+      if (this.tel) {
+        placeholder = 'XXX-XXXX-XXXX';
+      }
+      if (this.mail) {
+        placeholder = 'xxx@xx.xx';
+      }
+      if (this.url) {
+        placeholder = 'http://〜, https://〜, ftp://〜';
+      }
+      if (this.date) {
+        placeholder = 'YYYY/MM/DD, YYYY-MM-DD';
+      }
+      return placeholder;
+    },
+
     /**
      * 入力エラー発生フラグ
      *

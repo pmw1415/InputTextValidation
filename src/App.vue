@@ -119,6 +119,7 @@
       <InputTextValidation
         class="input-text-validation"
         :date="true"
+        :date-format="'YYYY-MM-DD'"
       />
     </div>
   </div>

@@ -1,7 +1,3 @@
-<!--
-TODO
-・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
--->
 <template>
   <div class="input-text-validation">
     <input
@@ -96,6 +92,11 @@ export default {
     date: {
       type: Boolean,
       default: false
+    },
+    // 日付フォーマット(date=true時のみ使用)
+    dateFormat: {
+      type: String,
+      default: 'YYYY/MM/DD'
     }
   },
   data: () => {
@@ -120,9 +121,24 @@ export default {
         placeholder = 'http://〜, https://〜, ftp://〜';
       }
       if (this.date) {
-        placeholder = 'YYYY/MM/DD, YYYY-MM-DD';
+        placeholder = this._dateFormat;
       }
       return placeholder;
+    },
+
+    /**
+     * 日付フォーマット
+     *
+     * props dateFormatで'YYYY/MM/DD', 'YYYY-MM-DD'が指定可能
+     */
+    _dateFormat() {
+      const format = this.dateFormat.toUpperCase();
+      if (format === 'YYYY/MM/DD') {
+        return 'YYYY/MM/DD';
+      } else if (format === 'YYYY-MM-DD') {
+        return 'YYYY-MM-DD';
+      }
+      return 'YYYY/MM/DD';
     },
 
     /**
@@ -456,7 +472,14 @@ export default {
         return false;
       }
 
-      return !value.match(/^\d{4}\/\d{2}\/\d{2}$|^\d{4}-\d{2}-\d{2}$/);
+      let pattern = '';
+      if (this._dateFormat === 'YYYY/MM/DD') {
+        pattern = /^\d{4}\/\d{2}\/\d{2}$/;
+      } else if (this._dateFormat === 'YYYY-MM-DD') {
+        pattern = /^\d{4}-\d{2}-\d{2}$/;
+      }
+
+      return !value.match(pattern);
     }
   }
 };

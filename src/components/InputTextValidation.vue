@@ -1,7 +1,6 @@
 <!--
 TODO
 ・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
-・初期表示時はバリデーションエラーが表示されないようにする
 -->
 <template>
   <div class="input-text-validation">
@@ -10,8 +9,9 @@ TODO
       :style="{ 'font-size': fontSize }"
       :placeholder="placeholder"
       :type="type"
-      v-model="value"
+      :value="value"
       class="input"
+      @input="onInput"
     />
     <div
       v-for="(errMsg, index) in errMsgList"
@@ -95,7 +95,8 @@ export default {
   },
   data: () => {
     return {
-      value: ''
+      value: '',
+      isInitDisp: true
     };
   },
   computed: {
@@ -137,6 +138,11 @@ export default {
      * @return {Array} エラーメッセージリスト。エラーなしの場合は空配列
      */
     errMsgList() {
+      // 初期表示時はエラーにしない
+      if (this.isInitDisp) {
+        return [];
+      }
+
       const msgList = [];
 
       // 必須チェック
@@ -192,6 +198,17 @@ export default {
     }
   },
   methods: {
+    /**
+     * 入力イベント
+     * @param {Object} e イベントオブジェクト
+     */
+    onInput(e) {
+      if (this.isInitDisp) {
+        this.isInitDisp = false;
+      }
+      this.value = e.target.value;
+    },
+
     /**
      * 必須チェック
      *

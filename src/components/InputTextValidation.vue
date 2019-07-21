@@ -1,18 +1,13 @@
-<--
-TODO
-・input typeをプロパティで指定できるようにする
-・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
-・tel, mail等のパターンが決まってるやつはプレースホルダーを指定する
-　　チェックパターン毎に固定で良い
-・初期表示時はバリデーションエラーが表示されないようにする
--->
 <template>
   <div class="input-text-validation">
     <input
       :class="{ error: hasInputError }"
       :style="{ 'font-size': fontSize }"
-      v-model="value"
+      :placeholder="placeholder"
+      :type="type"
+      :value="value"
       class="input"
+      @input="onInput"
     />
     <div
       v-for="(errMsg, index) in errMsgList"
@@ -33,6 +28,16 @@ TODO
 export default {
   name: 'InputTextValidation',
   props: {
+    // input type
+    type: {
+      type: String,
+      default: 'text'
+    },
+    // 入力初期値
+    initValue: {
+      type: String,
+      default: ''
+    },
     // フォントサイズ
     fontSize: {
       type: String,
@@ -87,14 +92,55 @@ export default {
     date: {
       type: Boolean,
       default: false
+    },
+    // 日付フォーマット(date=true時のみ使用)
+    dateFormat: {
+      type: String,
+      default: 'YYYY/MM/DD'
     }
   },
   data: () => {
     return {
-      value: ''
+      value: '',
+      isInitDisp: true
     };
   },
   computed: {
+    /**
+     * プレースホルダー
+     */
+    placeholder() {
+      let placeholder = '';
+      if (this.tel) {
+        placeholder = 'XXX-XXXX-XXXX';
+      }
+      if (this.mail) {
+        placeholder = 'xxx@xx.xx';
+      }
+      if (this.url) {
+        placeholder = 'http://〜, https://〜, ftp://〜';
+      }
+      if (this.date) {
+        placeholder = this._dateFormat;
+      }
+      return placeholder;
+    },
+
+    /**
+     * 日付フォーマット
+     *
+     * props dateFormatで'YYYY/MM/DD', 'YYYY-MM-DD'が指定可能
+     */
+    _dateFormat() {
+      const format = this.dateFormat.toUpperCase();
+      if (format === 'YYYY/MM/DD') {
+        return 'YYYY/MM/DD';
+      } else if (format === 'YYYY-MM-DD') {
+        return 'YYYY-MM-DD';
+      }
+      return 'YYYY/MM/DD';
+    },
+
     /**
      * 入力エラー発生フラグ
      *
@@ -113,6 +159,11 @@ export default {
      * @return {Array} エラーメッセージリスト。エラーなしの場合は空配列
      */
     errMsgList() {
+      // 初期表示時はエラーにしない
+      if (this.isInitDisp) {
+        return [];
+      }
+
       const msgList = [];
 
       // 必須チェック
@@ -167,7 +218,26 @@ export default {
       return msgList;
     }
   },
+  mounted() {
+    if (this.initValue) {
+      this.value = this.initValue;
+    }
+  },
   methods: {
+    /**
+     * 入力イベント
+     * @param {Object} e イベントオブジェクト
+     */
+    onInput(e) {
+      if (this.isInitDisp) {
+        this.isInitDisp = false;
+      }
+      this.value = e.target.value;
+
+      // 親に通知
+      this.$emit('input', this.value);
+    },
+
     /**
      * 必須チェック
      *
@@ -402,7 +472,14 @@ export default {
         return false;
       }
 
-      return !value.match(/^\d{4}\/\d{2}\/\d{2}$|^\d{4}-\d{2}-\d{2}$/);
+      let pattern = '';
+      if (this._dateFormat === 'YYYY/MM/DD') {
+        pattern = /^\d{4}\/\d{2}\/\d{2}$/;
+      } else if (this._dateFormat === 'YYYY-MM-DD') {
+        pattern = /^\d{4}-\d{2}-\d{2}$/;
+      }
+
+      return !value.match(pattern);
     }
   }
 };

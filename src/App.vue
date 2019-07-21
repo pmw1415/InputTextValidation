@@ -12,7 +12,10 @@
       <InputTextValidation
         class="input-text-validation"
         :required="true"
+        :init-value="reqValue"
+        @input="onInput"
       />
+      <div>入力: {{reqValue}}</div>
     </div>
 
     <div class="validation">
@@ -133,9 +136,15 @@ export default {
   },
   data() {
     return {
+      reqValue: 'aaaaa',
       min: 5,
       max: 10
     };
+  },
+  methods: {
+    onInput(value) {
+      this.reqValue = value;
+    }
   }
 };
 </script>

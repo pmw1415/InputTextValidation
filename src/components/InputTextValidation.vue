@@ -37,6 +37,11 @@ export default {
       type: String,
       default: 'text'
     },
+    // 入力初期値
+    initValue: {
+      type: String,
+      default: ''
+    },
     // フォントサイズ
     fontSize: {
       type: String,
@@ -197,6 +202,11 @@ export default {
       return msgList;
     }
   },
+  mounted() {
+    if (this.initValue) {
+      this.value = this.initValue;
+    }
+  },
   methods: {
     /**
      * 入力イベント
@@ -207,6 +217,9 @@ export default {
         this.isInitDisp = false;
       }
       this.value = e.target.value;
+
+      // 親に通知
+      this.$emit('input', this.value);
     },
 
     /**

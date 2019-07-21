@@ -54,6 +54,7 @@
       </div>
       <InputTextValidation
         class="input-text-validation"
+        type="number"
         :numeric="true"
       />
     </div>

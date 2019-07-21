@@ -1,6 +1,5 @@
 <!--
 TODO
-・input typeをプロパティで指定できるようにする
 ・dateは書式で2パターンに分ける（スラッシュ区切りとハイフン区切り）
 ・初期表示時はバリデーションエラーが表示されないようにする
 -->
@@ -10,6 +9,7 @@ TODO
       :class="{ error: hasInputError }"
       :style="{ 'font-size': fontSize }"
       :placeholder="placeholder"
+      :type="type"
       v-model="value"
       class="input"
     />
@@ -32,6 +32,11 @@ TODO
 export default {
   name: 'InputTextValidation',
   props: {
+    // input type
+    type: {
+      type: String,
+      default: 'text'
+    },
     // フォントサイズ
     fontSize: {
       type: String,
